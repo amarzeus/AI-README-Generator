@@ -21,6 +21,48 @@ interface PreviewProps {
   isLoading: boolean;
 }
 
+const ReadmeSkeletonLoader: React.FC = () => (
+  <div className="animate-pulse space-y-8 p-4">
+    {/* Profile Picture and Header */}
+    <div className="flex flex-col items-center space-y-4">
+      <div className="h-24 w-24 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+      <div className="h-8 w-3/5 rounded bg-gray-200 dark:bg-gray-700"></div>
+    </div>
+
+    {/* About Me Section */}
+    <div className="space-y-4">
+      <div className="h-6 w-1/4 rounded bg-gray-200 dark:bg-gray-700"></div>
+      <div className="space-y-2">
+        <div className="h-4 w-full rounded bg-gray-200 dark:bg-gray-700"></div>
+        <div className="h-4 w-full rounded bg-gray-200 dark:bg-gray-700"></div>
+        <div className="h-4 w-4/5 rounded bg-gray-200 dark:bg-gray-700"></div>
+      </div>
+    </div>
+
+    {/* Skills Section */}
+    <div className="space-y-4">
+      <div className="h-6 w-1/5 rounded bg-gray-200 dark:bg-gray-700"></div>
+      <div className="flex flex-wrap gap-2">
+        <div className="h-8 w-20 rounded-md bg-gray-200 dark:bg-gray-700"></div>
+        <div className="h-8 w-24 rounded-md bg-gray-200 dark:bg-gray-700"></div>
+        <div className="h-8 w-16 rounded-md bg-gray-200 dark:bg-gray-700"></div>
+        <div className="h-8 w-28 rounded-md bg-gray-200 dark:bg-gray-700"></div>
+        <div className="h-8 w-20 rounded-md bg-gray-200 dark:bg-gray-700"></div>
+      </div>
+    </div>
+
+    {/* Stats Section */}
+    <div className="space-y-4">
+      <div className="h-6 w-1/3 rounded bg-gray-200 dark:bg-gray-700"></div>
+      <div className="space-y-4">
+        <div className="h-32 w-full rounded-lg bg-gray-200 dark:bg-gray-700"></div>
+        <div className="h-20 w-full rounded-lg bg-gray-200 dark:bg-gray-700"></div>
+      </div>
+    </div>
+  </div>
+);
+
+
 const Preview: React.FC<PreviewProps> = ({ markdown, isLoading }) => {
   const [copied, setCopied] = useState(false);
 
@@ -47,11 +89,11 @@ const Preview: React.FC<PreviewProps> = ({ markdown, isLoading }) => {
       <CardHeader className="flex flex-row items-center justify-between sticky top-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm z-10">
         <CardTitle>Preview</CardTitle>
         <div className="flex items-center space-x-2">
-            <Button onClick={handleCopy} variant="ghost" size="sm" disabled={!markdown}>
+            <Button onClick={handleCopy} variant="ghost" size="sm" disabled={!markdown || isLoading}>
                 {copied ? <CheckIcon /> : <CopyIcon />}
                 {copied ? 'Copied!' : 'Copy'}
             </Button>
-            <Button onClick={handleDownload} variant="ghost" size="sm" disabled={!markdown}>
+            <Button onClick={handleDownload} variant="ghost" size="sm" disabled={!markdown || isLoading}>
                 <DownloadIcon />
                 Download
             </Button>
@@ -59,9 +101,7 @@ const Preview: React.FC<PreviewProps> = ({ markdown, isLoading }) => {
       </CardHeader>
       <CardContent className="flex-grow overflow-auto">
         {isLoading ? (
-          <div className="flex items-center justify-center h-full">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500"></div>
-          </div>
+          <ReadmeSkeletonLoader />
         ) : (
           <article className="prose dark:prose-invert prose-sm sm:prose-base max-w-none">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
