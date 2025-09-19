@@ -12,7 +12,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variantClasses = {
       default: "bg-indigo-600 text-white hover:bg-indigo-700/90",
-      ghost: "hover:bg-gray-700 hover:text-gray-100 text-gray-300",
+      ghost: "hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-gray-100 text-gray-600 dark:text-gray-300",
     };
 
     const sizeClasses = {

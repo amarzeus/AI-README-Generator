@@ -28,7 +28,7 @@ const TrashIcon: React.FC = () => (
 );
 
 const UserIcon: React.FC = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-user-round text-gray-400 w-8 h-8"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-user-round text-gray-500 dark:text-gray-400 w-8 h-8"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
 );
 
 const PlusIcon: React.FC = () => (
@@ -107,7 +107,7 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
         <div className="space-y-2">
             <Label>Profile Picture</Label>
             <div className="flex items-center gap-4">
-                <div className="w-20 h-20 rounded-full bg-gray-700 flex items-center justify-center overflow-hidden">
+                <div className="w-20 h-20 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center overflow-hidden">
                     {userProfile.profilePicture ? (
                         <img src={userProfile.profilePicture} alt="Profile Preview" className="w-full h-full object-cover" />
                     ) : (
@@ -127,7 +127,7 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
                         className="hidden"
                     />
                     {userProfile.profilePicture && (
-                        <Button onClick={() => handleChange('profilePicture', '')} variant="ghost" size="sm" className="text-red-400 hover:text-red-300 hover:bg-red-900/50">
+                        <Button onClick={() => handleChange('profilePicture', '')} variant="ghost" size="sm" className="text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/50">
                            <TrashIcon />
                            Remove
                         </Button>
@@ -149,8 +149,8 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
             <Label className="text-lg font-semibold">Projects</Label>
             <div className="mt-2 space-y-4">
                 {userProfile.projects.map((project, index) => (
-                    <div key={index} className="border border-gray-700 p-4 rounded-md space-y-3 relative">
-                         <Button onClick={() => handleRemoveProject(index)} variant="ghost" size="sm" className="absolute top-2 right-2 text-red-400 hover:text-red-300 hover:bg-red-900/50">
+                    <div key={index} className="border border-gray-200 dark:border-gray-700 p-4 rounded-md space-y-3 relative">
+                         <Button onClick={() => handleRemoveProject(index)} variant="ghost" size="sm" className="absolute top-2 right-2 text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/50">
                             <TrashIcon />
                         </Button>
                         <div className="space-y-2">
@@ -167,7 +167,7 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
                         </div>
                     </div>
                 ))}
-                 <Button onClick={handleAddProject} variant="ghost" className="w-full border-2 border-dashed border-gray-600 hover:border-gray-500">
+                 <Button onClick={handleAddProject} variant="ghost" className="w-full border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500">
                     <PlusIcon />
                     Add Project
                 </Button>
@@ -176,7 +176,7 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
 
         <div>
             <Label className="text-lg font-semibold">Education</Label>
-            <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4 border border-gray-700 p-4 rounded-md">
+            <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4 border border-gray-200 dark:border-gray-700 p-4 rounded-md">
                  <div className="space-y-2 md:col-span-2">
                     <Label htmlFor="university">University Name</Label>
                     <Input id="university" value={userProfile.education.university} onChange={e => handleEducationChange('university', e.target.value)} placeholder="e.g., Stanford University" />
@@ -227,7 +227,7 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
             <Label htmlFor="github-stats">Include GitHub Stats Card</Label>
         </div>
         {userProfile.showGithubStats && (
-             <div className="space-y-4 rounded-md border border-gray-700 p-4">
+             <div className="space-y-4 rounded-md border border-gray-200 dark:border-gray-700 p-4">
                 <div className="space-y-2">
                     <Label htmlFor="github-stats-theme">Stats Card Theme</Label>
                     <Select
@@ -252,11 +252,11 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
                                 <input
                                     type="checkbox"
                                     id={`hide-${stat}`}
-                                    className="h-4 w-4 rounded border-gray-500 bg-gray-800 text-indigo-600 focus:ring-indigo-500"
+                                    className="h-4 w-4 rounded border-gray-400 dark:border-gray-500 bg-gray-200 dark:bg-gray-800 text-indigo-600 focus:ring-indigo-500"
                                     checked={userProfile.githubStatsHideStats.includes(stat)}
                                     onChange={() => handleHideStatsChange(stat)}
                                 />
-                                <Label htmlFor={`hide-${stat}`} className="capitalize font-normal text-gray-300">{stat}</Label>
+                                <Label htmlFor={`hide-${stat}`} className="capitalize font-normal text-gray-700 dark:text-gray-300">{stat}</Label>
                             </div>
                         ))}
                     </div>

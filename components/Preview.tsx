@@ -7,8 +7,8 @@ const simpleMarkdownToHtml = (md: string) => {
     let html = md;
     
     // Headers
-    html = html.replace(/^# (.*$)/gim, '<h1 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4">$1</h1>');
-    html = html.replace(/^## (.*$)/gim, '<h2 class="text-2xl font-semibold border-b border-gray-700 pb-2 mb-4 mt-6">$1</h2>');
+    html = html.replace(/^# (.*$)/gim, '<h1 class="text-3xl font-bold border-b border-gray-200 dark:border-gray-700 pb-2 mb-4">$1</h1>');
+    html = html.replace(/^## (.*$)/gim, '<h2 class="text-2xl font-semibold border-b border-gray-200 dark:border-gray-700 pb-2 mb-4 mt-6">$1</h2>');
     html = html.replace(/^### (.*$)/gim, '<h3 class="text-xl font-semibold mt-4 mb-2">$1</h3>');
 
     // Links with Icons
@@ -38,10 +38,10 @@ const simpleMarkdownToHtml = (md: string) => {
         }
 
         if (icon) {
-            return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline inline-flex items-center gap-2">${icon}<span>${text}</span></a>`;
+            return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-blue-500 dark:text-blue-400 hover:underline inline-flex items-center gap-2">${icon}<span>${text}</span></a>`;
         }
         // Default link rendering if no icon matches
-        return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline">${text}</a>`;
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-blue-500 dark:text-blue-400 hover:underline">${text}</a>`;
     });
 
 
@@ -116,16 +116,16 @@ const Preview: React.FC<PreviewProps> = ({ markdown, isLoading, error }) => {
       </CardHeader>
       <CardContent className="flex-grow overflow-auto github-preview-scrollbar relative">
         {isLoading && (
-            <div className="absolute inset-0 bg-gray-800/50 backdrop-blur-sm flex items-center justify-center z-10">
+            <div className="absolute inset-0 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm flex items-center justify-center z-10">
                 <div className="text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-400 mx-auto"></div>
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500 dark:border-indigo-400 mx-auto"></div>
                     <p className="mt-4 text-lg">Generating your masterpiece...</p>
                 </div>
             </div>
         )}
-        {error && <div className="text-red-400 p-4 bg-red-900/50 rounded-md">{error}</div>}
+        {error && <div className="text-red-700 dark:text-red-400 p-4 bg-red-100 dark:bg-red-900/50 rounded-md">{error}</div>}
         <div 
-          className="prose prose-invert prose-p:text-gray-300 prose-headings:text-white prose-a:text-blue-400 prose-strong:text-white"
+          className="prose dark:prose-invert max-w-none"
           dangerouslySetInnerHTML={{ __html: renderedHtml }}
         />
       </CardContent>

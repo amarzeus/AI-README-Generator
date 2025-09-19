@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import type { UserProfile } from './types';
 import { generateReadme } from './services/geminiService';
 import Header from './components/Header';
@@ -8,6 +8,27 @@ import Preview from './components/Preview';
 import { Placeholders } from './constants';
 
 const App: React.FC = () => {
+    const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof window !== 'undefined') {
+      return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    }
+    return 'light';
+  });
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
+  };
+
   const [userProfile, setUserProfile] = useState<UserProfile>({
     name: 'Amar Kumar',
     bio: 'A passionate full-stack developer from India, specializing in building beautiful and functional web applications with React, Node.js, and modern AI technologies.',
@@ -60,8 +81,8 @@ const App: React.FC = () => {
   }, [userProfile]);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 flex flex-col">
-      <Header />
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 flex flex-col transition-colors duration-200">
+      <Header theme={theme} toggleTheme={toggleTheme} />
       <main className="flex-grow container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <InputForm
