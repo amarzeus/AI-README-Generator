@@ -24,6 +24,13 @@ const initialProfile: UserProfile = {
   githubStatsHideBorder: true,
   githubStatsDisableAnimations: false,
   profilePicture: '',
+  profilePictureStyle: {
+    isCircular: true,
+    hasBorder: false,
+    borderColor: '#4f46e5',
+    hasShadow: true,
+    shadowIntensity: 'Medium',
+  },
   portfolioUrl: '',
   blogUrl: '',
   education: {

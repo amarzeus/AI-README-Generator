@@ -53,6 +53,19 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
         },
     }));
   };
+  
+  const handlePictureStyleChange = <K extends keyof UserProfile['profilePictureStyle']>(
+    field: K,
+    value: UserProfile['profilePictureStyle'][K]
+  ) => {
+    setUserProfile(prev => ({
+        ...prev,
+        profilePictureStyle: {
+            ...prev.profilePictureStyle,
+            [field]: value,
+        },
+    }));
+  };
 
   const handleProjectChange = (index: number, field: keyof Project, value: string) => {
     const updatedProjects = [...userProfile.projects];
@@ -104,7 +117,7 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
           <Input id="name" value={userProfile.name} onChange={e => handleChange('name', e.target.value)} placeholder="e.g., Ada Lovelace" />
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-4">
             <Label>Profile Picture</Label>
             <div className="flex items-center gap-4">
                 <div className="w-20 h-20 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center overflow-hidden">
@@ -133,6 +146,71 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
                         </Button>
                     )}
                 </div>
+            </div>
+             <div className="space-y-4 rounded-md border border-gray-200 dark:border-gray-700 p-4">
+                <Label className="font-semibold">Profile Picture Styling</Label>
+                <div className="flex items-center justify-between">
+                    <Label htmlFor="is-circular" className="font-normal text-sm">Circular Crop</Label>
+                    <Switch
+                        id="is-circular"
+                        checked={userProfile.profilePictureStyle.isCircular}
+                        onCheckedChange={(checked) => handlePictureStyleChange('isCircular', checked)}
+                    />
+                </div>
+                 <div className="flex items-center justify-between">
+                    <Label htmlFor="has-shadow" className="font-normal text-sm">Enable Shadow</Label>
+                    <Switch
+                        id="has-shadow"
+                        checked={userProfile.profilePictureStyle.hasShadow}
+                        onCheckedChange={(checked) => handlePictureStyleChange('hasShadow', checked)}
+                    />
+                </div>
+                {userProfile.profilePictureStyle.hasShadow && (
+                    <div className="space-y-2 pl-2 border-l-2 border-gray-200 dark:border-gray-700">
+                        <Label htmlFor="shadow-intensity">Shadow Intensity</Label>
+                        <Select
+                            id="shadow-intensity"
+                            value={userProfile.profilePictureStyle.shadowIntensity}
+                            onChange={(e) => handlePictureStyleChange('shadowIntensity', e.target.value as UserProfile['profilePictureStyle']['shadowIntensity'])}
+                        >
+                            <option value="Subtle">Subtle</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Strong">Strong</option>
+                        </Select>
+                    </div>
+                )}
+                <div className="flex items-center justify-between">
+                    <Label htmlFor="has-border" className="font-normal text-sm">Enable Border</Label>
+                    <Switch
+                        id="has-border"
+                        checked={userProfile.profilePictureStyle.hasBorder}
+                        onCheckedChange={(checked) => handlePictureStyleChange('hasBorder', checked)}
+                    />
+                </div>
+                {userProfile.profilePictureStyle.hasBorder && (
+                     <div className="space-y-2 pl-2 border-l-2 border-gray-200 dark:border-gray-700">
+                        <Label htmlFor="border-color">Border Color</Label>
+                        <div className="relative">
+                             <Input
+                                id="border-color"
+                                type="text"
+                                value={userProfile.profilePictureStyle.borderColor}
+                                onChange={(e) => handlePictureStyleChange('borderColor', e.target.value)}
+                                placeholder="#4f46e5"
+                                className="pl-12"
+                            />
+                            <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+                                <input 
+                                    type="color" 
+                                    value={userProfile.profilePictureStyle.borderColor} 
+                                    onChange={(e) => handlePictureStyleChange('borderColor', e.target.value)}
+                                    className="w-6 h-6 p-0 border-none rounded-md bg-transparent cursor-pointer appearance-none"
+                                    style={{'WebkitAppearance': 'none'}}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
 

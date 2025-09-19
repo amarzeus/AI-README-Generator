@@ -4,6 +4,14 @@ export interface Project {
   url: string;
 }
 
+export interface ProfilePictureStyle {
+  isCircular: boolean;
+  hasBorder: boolean;
+  borderColor: string;
+  hasShadow: boolean;
+  shadowIntensity: 'Subtle' | 'Medium' | 'Strong';
+}
+
 export interface UserProfile {
   name: string;
   bio: string;
@@ -20,6 +28,7 @@ export interface UserProfile {
   githubStatsHideBorder: boolean;
   githubStatsDisableAnimations: boolean;
   profilePicture: string; // This will be a base64 data URL
+  profilePictureStyle: ProfilePictureStyle;
   portfolioUrl: string;
   blogUrl: string;
   education: {

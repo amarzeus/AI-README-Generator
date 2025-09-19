@@ -19,9 +19,33 @@ const getStyleInstructions = (style: UserProfile['generationStyle']): string => 
   }
 };
 
+const createProfilePictureStyleString = (style: UserProfile['profilePictureStyle']): string => {
+    const styles: string[] = [];
+    styles.push(style.isCircular ? 'border-radius:50%;' : 'border-radius:12px;');
+
+    if (style.hasBorder && style.borderColor) {
+        const color = style.borderColor.match(/^#[0-9a-f]{6}$/i) ? style.borderColor : '#4f46e5';
+        styles.push(`border: 4px solid ${color};`);
+    }
+
+    if (style.hasShadow) {
+        const shadowValues = {
+            Subtle: 'box-shadow: 0 4px 10px rgba(0,0,0,0.08);',
+            Medium: 'box-shadow: 0 8px 24px rgba(0,0,0,0.12);',
+            Strong: 'box-shadow: 0 15px 40px rgba(0,0,0,0.2);'
+        };
+        styles.push(shadowValues[style.shadowIntensity]);
+    }
+    
+    styles.push('object-fit: cover;');
+
+    return styles.join(' ');
+};
+
 
 const createPrompt = (profile: UserProfile): string => {
   const hiddenStats = profile.githubStatsHideStats.join(',');
+  const profilePictureStyleString = createProfilePictureStyleString(profile.profilePictureStyle);
 
   const statsCardParams = new URLSearchParams({
     username: profile.githubUsername,
@@ -68,8 +92,8 @@ ${JSON.stringify(profile, null, 2)}
 **INSTRUCTIONS:**
 
 1.  **Profile Picture:** If the \`profilePicture\` field is not empty, you **MUST** place an image at the very top of the README.
-    *   This image **MUST** be rendered using an HTML \`<img>\` tag to ensure it is centered and circular.
-    *   Use this exact HTML structure: \`<p align="center"><img src="${profile.profilePicture}" alt="${profile.name}" width="150" height="150" style="border-radius:50%;"></p>\`
+    *   This image **MUST** be rendered using an HTML \`<img>\` tag to ensure it is centered and styled correctly.
+    *   Use this exact HTML structure: \`<p align="center"><img src="${profile.profilePicture}" alt="${profile.name}" width="150" height="150" style="${profilePictureStyleString}"></p>\`
 
 2.  **Header:** After the profile picture (if any), add a level 1 heading (#) with a creative greeting, like "Hi there, I'm ${profile.name} 👋".
 
