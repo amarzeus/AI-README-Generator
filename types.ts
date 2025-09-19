@@ -13,6 +13,7 @@ export interface UserProfile {
   twitterUsername: string;
   website: string;
   showGithubStats: boolean;
+  githubStatsTheme: string;
   profilePicture: string; // This will be a base64 data URL
   portfolioUrl: string;
   blogUrl: string;

@@ -6,6 +6,7 @@ import { Textarea } from './ui/Textarea';
 import { Button } from './ui/Button';
 import { Label } from './ui/Label';
 import { Switch } from './ui/Switch';
+import { Select } from './ui/Select';
 
 interface InputFormProps {
   userProfile: UserProfile;
@@ -214,6 +215,24 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
             />
             <Label htmlFor="github-stats">Include GitHub Stats Card</Label>
         </div>
+        {userProfile.showGithubStats && (
+            <div className="space-y-2">
+                <Label htmlFor="github-stats-theme">Stats Card Theme</Label>
+                <Select
+                    id="github-stats-theme"
+                    value={userProfile.githubStatsTheme}
+                    onChange={(e) => handleChange('githubStatsTheme', e.target.value)}
+                >
+                    <option value="radical">Radical</option>
+                    <option value="merko">Merko</option>
+                    <option value="gruvbox">Gruvbox</option>
+                    <option value="dark">Dark</option>
+                    <option value="light">Light</option>
+                    <option value="tokyonight">Tokyo Night</option>
+                    <option value="solarized_dark">Solarized Dark</option>
+                </Select>
+            </div>
+        )}
         <Button onClick={onGenerate} disabled={isLoading} className="w-full">
             {isLoading ? (
                 <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
