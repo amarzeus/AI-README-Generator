@@ -59,8 +59,8 @@ ${JSON.stringify(profile, null, 2)}
 
 8.  **GitHub Stats:** If 'showGithubStats' is true, include a "📊 GitHub Stats" section (##).
     *   Add the GitHub Readme Stats card: \`https://github-readme-stats.vercel.app/api?username=${profile.githubUsername}&show_icons=true&theme=${profile.githubStatsTheme}&hide_border=true&rank_icon=github\`
-    *   Include the Top Languages card: \`https://github-readme-stats.vercel.app/api/top-langs/?username=${profile.githubUsername}&layout=compact&theme=${profile.githubStatsTheme}&hide_border=true\`
-    *   Finally, include the GitHub Streak Stats card: \`https://github-readme-streak-stats.herokuapp.com/?user=${profile.githubUsername}&theme=${profile.githubStatsTheme}&hide_border=true\`
+    *   Include the GitHub Streak Stats card: \`https://github-readme-streak-stats.herokuapp.com/?user=${profile.githubUsername}&theme=${profile.githubStatsTheme}&hide_border=true\`
+    *   Finally, include the Top Languages card: \`https://github-readme-stats.vercel.app/api/top-langs/?username=${profile.githubUsername}&layout=compact&theme=${profile.githubStatsTheme}&hide_border=true\`
 
 9.  **Final Output:** The entire response must be a single block of valid Markdown code. Do not include explanations, comments, or wrap it in markdown code fences (\`\`\`). The only exception is the HTML \`<img>\` tag for the profile picture as instructed.
 `;
