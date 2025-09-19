@@ -120,6 +120,14 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
               <Label htmlFor="website">Website URL</Label>
               <Input id="website" value={userProfile.website} onChange={e => handleChange('website', e.target.value)} placeholder="https://your.domain" />
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="portfolio">Portfolio URL</Label>
+              <Input id="portfolio" value={userProfile.portfolioUrl} onChange={e => handleChange('portfolioUrl', e.target.value)} placeholder="https://your.portfolio" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="blog">Blog URL</Label>
+              <Input id="blog" value={userProfile.blogUrl} onChange={e => handleChange('blogUrl', e.target.value)} placeholder="https://your.blog" />
+            </div>
         </div>
          <div className="flex items-center space-x-2 pt-2">
             <Switch

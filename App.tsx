@@ -16,6 +16,8 @@ const App: React.FC = () => {
     linkedinUsername: 'amar-kumar-profile',
     twitterUsername: 'amar_zeus',
     website: 'https://portfolio.example.com',
+    portfolioUrl: '',
+    blogUrl: '',
     showGithubStats: true,
     profilePicture: '',
   });

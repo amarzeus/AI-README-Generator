@@ -8,4 +8,6 @@ export interface UserProfile {
   website: string;
   showGithubStats: boolean;
   profilePicture: string; // This will be a base64 data URL
+  portfolioUrl: string;
+  blogUrl: string;
 }

@@ -38,11 +38,13 @@ ${JSON.stringify(profile, null, 2)}
         *   **Fallback:** If you cannot find a specific logo for a skill, create a badge with just the skill name and a neutral color like '777'.
     *   **Output Format:** The output for this section must be a series of Markdown images, like \`![Skill Name](URL)\`.
 
-5.  **Connect with me:** Create a "🔗 Connect with me" section (##). Provide links to the user's social media.
-    *   GitHub: \`https://github.com/${profile.githubUsername}\`
-    *   LinkedIn: \`https://linkedin.com/in/${profile.linkedinUsername}\`
-    *   Twitter: \`https://twitter.com/${profile.twitterUsername}\`
-    *   Website: \`${profile.website}\` (if provided).
+5.  **Connect with me:** Create a "🔗 Connect with me" section (##). Provide links to the user's social media and websites. **Only include links for fields that are not empty in the JSON data.** Use the specified markdown link text.
+    *   GitHub: \`[GitHub](https://github.com/${profile.githubUsername})\`
+    *   LinkedIn: \`[LinkedIn](https://linkedin.com/in/${profile.linkedinUsername})\`
+    *   Twitter: \`[Twitter](https://twitter.com/${profile.twitterUsername})\`
+    *   Website: \`[Website](${profile.website})\`
+    *   Portfolio: \`[Portfolio](${profile.portfolioUrl})\`
+    *   Blog: \`[Blog](${profile.blogUrl})\`
 
 6.  **GitHub Stats:** If 'showGithubStats' is true, include a "📊 GitHub Stats" section (##).
     *   Add the GitHub Readme Stats card: \`https://github-readme-stats.vercel.app/api?username=${profile.githubUsername}&show_icons=true&theme=radical&hide_border=true&rank_icon=github\`
