@@ -101,16 +101,19 @@ ${JSON.stringify(profile, null, 2)}
 
 4.  **Skills Section:**
     *   Create a section with a level 2 heading (##) titled "🛠️ Skills".
-    *   For each skill in the 'skills' field (which is a comma-separated string), you **MUST** generate a corresponding Shields.io badge.
-    *   The badges should be displayed inline, separated by spaces. Do not use lists.
-    *   **Badge Generation Rules:**
-        *   **Style:** Use the 'for-the-badge' style: \`style=for-the-badge\`.
-        *   **Logo & Color:** You must research and find the official logo name and brand HEX color for each technology. Use these for the 'logo' and badge color parameters. For example, for "TypeScript", the logo is 'typescript' and the color is '3178C6'. For "Node.js", the skill name in the badge must be "Node.js", the logo 'node.js', and the color '339933'.
-        *   **URL Encoding:** Ensure the skill name in the badge URL is properly encoded (e.g., spaces become '%20' or '+').
-        *   **Logo Color:** The logo color should always be 'white' (\`logoColor=white\`).
-        *   **Example Badge URL for TypeScript:** \`https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white\`
-        *   **Fallback:** If you cannot find a specific logo for a skill, create a badge with just the skill name and a neutral color like '777'.
-    *   **Output Format:** The output for this section must be a series of Markdown images, like \`![Skill Name](URL)\`.
+    *   For each skill in the 'skills' field (which is a comma-separated string), generate a corresponding Shields.io badge.
+    *   The badges **MUST** be displayed on a single line, separated by a single space. Do not use lists or line breaks between badges.
+    *   **Badge Generation Strategy:**
+        1.  **Primary Method (Logo from Simple Icons):** For each skill, first try to find its corresponding icon on Simple Icons (simpleicons.org). Use the icon's slug for the \`logo\` parameter and its hex color for the badge color in the Shields.io URL.
+        2.  **Fallback Method (No Logo):** If a specific, official logo cannot be found on Simple Icons or a similar reputable source, create a simpler badge. This fallback badge should only display the skill's name, with no logo. Use a neutral gray color like \`777777\` for the background.
+    *   **Badge URL Construction Rules:**
+        *   **Base URL:** \`https://img.shields.io/badge/...\`
+        *   **Style:** Always use \`style=for-the-badge\`.
+        *   **Logo Color:** When a logo is used, always set \`logoColor=white\`.
+        *   **URL Encoding:** Skill names with spaces or special characters must be URL-encoded (e.g., "Node.js" is valid as is, but a skill like "My SQL" would need encoding).
+        *   **Example (with logo):** For "TypeScript", the Simple Icons slug is 'typescript' and the color is '3178C6'. The URL should be: \`https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white\`
+        *   **Example (fallback):** For a fictional skill "DataWeave", if no logo exists, the URL would be: \`https://img.shields.io/badge/DataWeave-777777?style=for-the-badge\`
+    *   **Output Format:** The final output for this section must be a series of Markdown images, like \`![Skill Name](URL) ![Another Skill](URL)\`.
 
 5.  **Projects Section:**
     *   Create a section with a level 2 heading (##) titled "🚀 My Projects".
