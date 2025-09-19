@@ -15,7 +15,7 @@ const XIcon: React.FC = () => (
 const SocialCardModal: React.FC<SocialCardModalProps> = ({ isOpen, onClose, userProfile }) => {
     if (!isOpen) return null;
 
-    const shareText = `Check out my new AI-generated GitHub README! Created with AI README Generator.`;
+    const shareText = `Check out my new AI-generated GitHub README! Created with GitHub README Generator.`;
     const shareUrl = window.location.href;
     const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
     const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
@@ -61,7 +61,7 @@ const SocialCardModal: React.FC<SocialCardModalProps> = ({ isOpen, onClose, user
                                </a>
                            </div>
                            <div className="mt-6 text-center">
-                               <p className="text-sm text-gray-400">Generated with AI README Generator</p>
+                               <p className="text-sm text-gray-400">Generated with GitHub README Generator</p>
                            </div>
                        </div>
                     </CardContent>
