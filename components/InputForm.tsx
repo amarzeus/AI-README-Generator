@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import type { UserProfile } from '../types';
+import type { UserProfile, Project } from '../types';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
 import { Input } from './ui/Input';
 import { Textarea } from './ui/Textarea';
@@ -30,6 +30,10 @@ const UserIcon: React.FC = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-user-round text-gray-400 w-8 h-8"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
 );
 
+const PlusIcon: React.FC = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-plus h-4 w-4 mr-2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+);
+
 const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGenerate, isLoading }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -45,6 +49,21 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
             [field]: value,
         },
     }));
+  };
+
+  const handleProjectChange = (index: number, field: keyof Project, value: string) => {
+    const updatedProjects = [...userProfile.projects];
+    updatedProjects[index] = { ...updatedProjects[index], [field]: value };
+    handleChange('projects', updatedProjects);
+  };
+
+  const handleAddProject = () => {
+    handleChange('projects', [...userProfile.projects, { name: '', description: '', url: '' }]);
+  };
+
+  const handleRemoveProject = (index: number) => {
+    const updatedProjects = userProfile.projects.filter((_, i) => i !== index);
+    handleChange('projects', updatedProjects);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -112,6 +131,35 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
         <div className="space-y-2">
           <Label htmlFor="skills">Skills</Label>
           <Textarea id="skills" value={userProfile.skills} onChange={e => handleChange('skills', e.target.value)} placeholder="Comma separated, e.g., React, Next.js, Docker" />
+        </div>
+
+        <div>
+            <Label className="text-lg font-semibold">Projects</Label>
+            <div className="mt-2 space-y-4">
+                {userProfile.projects.map((project, index) => (
+                    <div key={index} className="border border-gray-700 p-4 rounded-md space-y-3 relative">
+                         <Button onClick={() => handleRemoveProject(index)} variant="ghost" size="sm" className="absolute top-2 right-2 text-red-400 hover:text-red-300 hover:bg-red-900/50">
+                            <TrashIcon />
+                        </Button>
+                        <div className="space-y-2">
+                            <Label htmlFor={`project-name-${index}`}>Project Name</Label>
+                            <Input id={`project-name-${index}`} value={project.name} onChange={e => handleProjectChange(index, 'name', e.target.value)} placeholder="e.g., My Awesome App" />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor={`project-desc-${index}`}>Description</Label>
+                            <Textarea id={`project-desc-${index}`} value={project.description} onChange={e => handleProjectChange(index, 'description', e.target.value)} placeholder="A short description of your project." rows={2} />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor={`project-url-${index}`}>Live URL</Label>
+                            <Input id={`project-url-${index}`} value={project.url} onChange={e => handleProjectChange(index, 'url', e.target.value)} placeholder="https://your-project.com" />
+                        </div>
+                    </div>
+                ))}
+                 <Button onClick={handleAddProject} variant="ghost" className="w-full border-2 border-dashed border-gray-600 hover:border-gray-500">
+                    <PlusIcon />
+                    Add Project
+                </Button>
+            </div>
         </div>
 
         <div>

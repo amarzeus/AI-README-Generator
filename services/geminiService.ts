@@ -37,13 +37,19 @@ ${JSON.stringify(profile, null, 2)}
         *   **Example Badge URL for TypeScript:** \`https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white\`
         *   **Fallback:** If you cannot find a specific logo for a skill, create a badge with just the skill name and a neutral color like '777'.
     *   **Output Format:** The output for this section must be a series of Markdown images, like \`![Skill Name](URL)\`.
+
+5.  **Projects Section:**
+    *   Create a section with a level 2 heading (##) titled "🚀 My Projects".
+    *   **Only include this section if the 'projects' array in the JSON is not empty.**
+    *   For each project in the array, create a level 3 heading (###) with the project name linked to its URL: \`### [PROJECT_NAME](PROJECT_URL)\`
+    *   Below the heading, add the project 'description'.
     
-5.  **Education Section:**
+6.  **Education Section:**
     *   Create a section with a level 2 heading (##) titled "🎓 Education".
     *   **Only include this section if the 'education.university' field in the JSON is not empty.**
     *   Format the content as a single, bolded line: **${profile.education.university}** - ${profile.education.degree} (${profile.education.graduationYear})
 
-6.  **Connect with me:** Create a "🔗 Connect with me" section (##). Provide links to the user's social media and websites. **Only include links for fields that are not empty in the JSON data.** Use the specified markdown link text.
+7.  **Connect with me:** Create a "🔗 Connect with me" section (##). Provide links to the user's social media and websites. **Only include links for fields that are not empty in the JSON data.** Use the specified markdown link text.
     *   GitHub: \`[GitHub](https://github.com/${profile.githubUsername})\`
     *   LinkedIn: \`[LinkedIn](https://linkedin.com/in/${profile.linkedinUsername})\`
     *   Twitter: \`[Twitter](https://twitter.com/${profile.twitterUsername})\`
@@ -51,11 +57,11 @@ ${JSON.stringify(profile, null, 2)}
     *   Portfolio: \`[Portfolio](${profile.portfolioUrl})\`
     *   Blog: \`[Blog](${profile.blogUrl})\`
 
-7.  **GitHub Stats:** If 'showGithubStats' is true, include a "📊 GitHub Stats" section (##).
+8.  **GitHub Stats:** If 'showGithubStats' is true, include a "📊 GitHub Stats" section (##).
     *   Add the GitHub Readme Stats card: \`https://github-readme-stats.vercel.app/api?username=${profile.githubUsername}&show_icons=true&theme=radical&hide_border=true&rank_icon=github\`
     *   Also include the Top Languages card: \`https://github-readme-stats.vercel.app/api/top-langs/?username=${profile.githubUsername}&layout=compact&theme=radical&hide_border=true\`
 
-8.  **Final Output:** The entire response must be a single block of valid Markdown code. Do not include explanations, comments, or wrap it in markdown code fences (\`\`\`). The only exception is the HTML \`<img>\` tag for the profile picture as instructed.
+9.  **Final Output:** The entire response must be a single block of valid Markdown code. Do not include explanations, comments, or wrap it in markdown code fences (\`\`\`). The only exception is the HTML \`<img>\` tag for the profile picture as instructed.
 `;
 };
 

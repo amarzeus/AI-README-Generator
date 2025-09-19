@@ -9,6 +9,7 @@ const simpleMarkdownToHtml = (md: string) => {
     // Headers
     html = html.replace(/^# (.*$)/gim, '<h1 class="text-3xl font-bold border-b border-gray-700 pb-2 mb-4">$1</h1>');
     html = html.replace(/^## (.*$)/gim, '<h2 class="text-2xl font-semibold border-b border-gray-700 pb-2 mb-4 mt-6">$1</h2>');
+    html = html.replace(/^### (.*$)/gim, '<h3 class="text-xl font-semibold mt-4 mb-2">$1</h3>');
 
     // Links with Icons
     const linkedinIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>`;
@@ -55,7 +56,7 @@ const simpleMarkdownToHtml = (md: string) => {
         const trimmed = p.trim();
         if (!trimmed) return '';
         // If it's already a block element from our processing or from Gemini, don't wrap it in <p>
-        if (trimmed.startsWith('<h1') || trimmed.startsWith('<h2') || trimmed.startsWith('<p')) {
+        if (trimmed.startsWith('<h1') || trimmed.startsWith('<h2') || trimmed.startsWith('<h3') || trimmed.startsWith('<p')) {
             return trimmed;
         }
         return `<p>${trimmed.replace(/\n/g, '<br/>')}</p>`

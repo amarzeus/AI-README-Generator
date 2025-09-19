@@ -1,3 +1,9 @@
+export interface Project {
+  name: string;
+  description: string;
+  url: string;
+}
+
 export interface UserProfile {
   name: string;
   bio: string;
@@ -15,4 +21,5 @@ export interface UserProfile {
     degree: string;
     graduationYear: string;
   };
+  projects: Project[];
 }

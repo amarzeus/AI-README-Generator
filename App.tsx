@@ -23,6 +23,13 @@ const App: React.FC = () => {
       degree: 'B.Sc. in Computer Science',
       graduationYear: '2024',
     },
+    projects: [
+      {
+        name: 'AI README Generator',
+        description: 'An AI-powered tool to generate beautiful GitHub profile READMEs. Built with React, TypeScript, and the Gemini API.',
+        url: 'https://github.com/amarzeus/ai-github-readme-generator',
+      }
+    ],
     showGithubStats: true,
     profilePicture: '',
   });
