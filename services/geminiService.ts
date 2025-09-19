@@ -106,9 +106,9 @@ ${JSON.stringify(profile, null, 2)}
     *   Blog: \`[Blog](${profile.blogUrl})\`
 
 8.  **GitHub Stats:** If 'showGithubStats' is true, include a "📊 GitHub Stats" section (##).
-    *   Add the GitHub Readme Stats card: \`${statsCardUrl}\`
-    *   Include the GitHub Streak Stats card: \`${streakCardUrl}\`
-    *   Finally, include the Top Languages card: \`${topLangsCardUrl}\`
+    *   Add the GitHub Readme Stats card: \`![](${statsCardUrl})\`
+    *   Include the GitHub Streak Stats card: \`![](${streakCardUrl})\`
+    *   Finally, include the Top Languages card: \`![](${topLangsCardUrl})\`
 
 9.  **Final Output:** The entire response must be a single block of valid Markdown code. Do not include explanations, comments, or wrap it in markdown code fences (\`\`\`). The only exception is the HTML \`<img>\` tag for the profile picture as instructed.
 `;
