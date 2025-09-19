@@ -10,7 +10,7 @@ There are many ways to contribute, from writing code and improving documentation
 
 ### 🐛 Reporting Bugs
 
-Bugs are tracked as [GitHub issues](https://github.com/amarzeus/ai-github-readme-generator/issues). Before creating a bug report, please check the existing issues to see if the problem has already been reported.
+Bugs are tracked as [GitHub issues](https://github.com/amarzeus/ai-readme-generator/issues). Before creating a bug report, please check the existing issues to see if the problem has already been reported.
 
 When you are creating a bug report, please include as many details as possible:
 
@@ -22,7 +22,7 @@ When you are creating a bug report, please include as many details as possible:
 
 ### ✨ Suggesting Enhancements
 
-Enhancement suggestions are also tracked as [GitHub issues](https://github.com/amarzeus/ai-github-readme-generator/issues). If you have an idea for a new feature or an improvement to an existing one, please provide:
+Enhancement suggestions are also tracked as [GitHub issues](https://github.com/amarzeus/ai-readme-generator/issues). If you have an idea for a new feature or an improvement to an existing one, please provide:
 
 -   A clear and descriptive title.
 -   A detailed description of the proposed enhancement and why it would be beneficial.
