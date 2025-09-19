@@ -25,11 +25,21 @@ ${JSON.stringify(profile, null, 2)}
 
 3.  **About Me:** Create a section titled "🚀 About Me" with a level 2 heading (##). Use the provided 'bio'.
 
-4.  **Skills:** Create a "🛠️ Skills" section (##). List the skills from the 'skills' field. For each skill, generate a Shields.io badge with the 'for-the-badge' style.
-    *   **Badge URL Format:** \`https://img.shields.io/badge/SKILL_NAME-HEX_COLOR?style=for-the-badge&logo=LOGO_NAME&logoColor=white\`
-    *   **Important:** Automatically find appropriate HEX_COLOR and LOGO_NAME for popular technologies (e.g., React: logo='react', color='20232A', logoColor='61DAFB'). If a logo is unavailable, just use the skill name.
+4.  **Skills Section:**
+    *   Create a section with a level 2 heading (##) titled "🛠️ Skills".
+    *   For each skill in the 'skills' field (which is a comma-separated string), you **MUST** generate a corresponding Shields.io badge.
+    *   The badges should be displayed inline, separated by spaces. Do not use lists.
+    *   **Badge Generation Rules:**
+        *   **Style:** Use the 'for-the-badge' style: \`style=for-the-badge\`.
+        *   **Logo & Color:** You must research and find the official logo name and brand HEX color for each technology. Use these for the 'logo' and badge color parameters. For example, for "TypeScript", the logo is 'typescript' and the color is '3178C6'. For "Node.js", the skill name in the badge must be "Node.js", the logo 'node.js', and the color '339933'.
+        *   **URL Encoding:** Ensure the skill name in the badge URL is properly encoded (e.g., spaces become '%20' or '+').
+        *   **Logo Color:** The logo color should always be 'white' (\`logoColor=white\`).
+        *   **Example Badge URL for TypeScript:** \`https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white\`
+        *   **Fallback:** If you cannot find a specific logo for a skill, create a badge with just the skill name and a neutral color like '777'.
+    *   **Output Format:** The output for this section must be a series of Markdown images, like \`![Skill Name](URL)\`.
 
 5.  **Connect with me:** Create a "🔗 Connect with me" section (##). Provide links to the user's social media.
+    *   GitHub: \`https://github.com/${profile.githubUsername}\`
     *   LinkedIn: \`https://linkedin.com/in/${profile.linkedinUsername}\`
     *   Twitter: \`https://twitter.com/${profile.twitterUsername}\`
     *   Website: \`${profile.website}\` (if provided).
