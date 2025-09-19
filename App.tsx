@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback } from 'react';
 import type { UserProfile } from './types';
 import { generateReadme } from './services/geminiService';
@@ -18,6 +17,7 @@ const App: React.FC = () => {
     twitterUsername: 'amar_zeus',
     website: 'https://portfolio.example.com',
     showGithubStats: true,
+    profilePicture: '',
   });
 
   const [generatedMarkdown, setGeneratedMarkdown] = useState<string>(Placeholders.MARKDOWN_PLACEHOLDER);

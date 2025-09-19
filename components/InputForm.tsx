@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import type { UserProfile } from '../types';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
 import { Input } from './ui/Input';
@@ -15,23 +15,42 @@ interface InputFormProps {
 }
 
 const WandIcon: React.FC = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-wand-2">
-        <path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72Z"/>
-        <path d="m14 7 3 3"/>
-        <path d="M5 6v4"/>
-        <path d="M19 14v4"/>
-        <path d="M10 2v2"/>
-        <path d="M7 8H3"/>
-        <path d="M21 16h-4"/>
-        <path d="M11 3H9"/>
-    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-wand-2 h-5 w-5"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72Z"/><path d="m14 7 3 3"/><path d="M5 6v4"/><path d="M19 14v4"/><path d="M10 2v2"/><path d="M7 8H3"/><path d="M21 16h-4"/><path d="M11 3H9"/></svg>
 );
 
+const UploadIcon: React.FC = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-upload w-4 h-4 mr-2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+);
+
+const TrashIcon: React.FC = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trash-2 w-4 h-4 mr-2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+);
+
+const UserIcon: React.FC = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-user-round text-gray-400 w-8 h-8"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+);
 
 const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGenerate, isLoading }) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const handleChange = <K extends keyof UserProfile,>(field: K, value: UserProfile[K]) => {
     setUserProfile(prev => ({ ...prev, [field]: value }));
   };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result) {
+          handleChange('profilePicture', event.target.result as string);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const triggerFileSelect = () => fileInputRef.current?.click();
 
   return (
     <Card>
@@ -43,9 +62,42 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
           <Label htmlFor="name">Name</Label>
           <Input id="name" value={userProfile.name} onChange={e => handleChange('name', e.target.value)} placeholder="e.g., Ada Lovelace" />
         </div>
+
+        <div className="space-y-2">
+            <Label>Profile Picture</Label>
+            <div className="flex items-center gap-4">
+                <div className="w-20 h-20 rounded-full bg-gray-700 flex items-center justify-center overflow-hidden">
+                    {userProfile.profilePicture ? (
+                        <img src={userProfile.profilePicture} alt="Profile Preview" className="w-full h-full object-cover" />
+                    ) : (
+                        <UserIcon />
+                    )}
+                </div>
+                <div className="flex flex-col gap-2">
+                    <Button onClick={triggerFileSelect} variant="ghost">
+                        <UploadIcon />
+                        Upload Image
+                    </Button>
+                    <input
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={handleFileChange}
+                        accept="image/png, image/jpeg, image/gif"
+                        className="hidden"
+                    />
+                    {userProfile.profilePicture && (
+                        <Button onClick={() => handleChange('profilePicture', '')} variant="ghost" size="sm" className="text-red-400 hover:text-red-300 hover:bg-red-900/50">
+                           <TrashIcon />
+                           Remove
+                        </Button>
+                    )}
+                </div>
+            </div>
+        </div>
+
         <div className="space-y-2">
           <Label htmlFor="bio">Bio</Label>
-          <Textarea id="bio" value={userProfile.bio} onChange={e => handleChange('bio', e.target.value)} placeholder="Tell us about yourself..." rows={4} />
+          <Textarea id="bio" value={userProfile.bio} onChange={e => handleChange('bio', e.target.value)} placeholder="Tell us about yourself..." rows={3} />
         </div>
         <div className="space-y-2">
           <Label htmlFor="skills">Skills</Label>

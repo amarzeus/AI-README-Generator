@@ -20,7 +20,15 @@ const simpleMarkdownToHtml = (md: string) => {
     html = html.replace(/\*\*(.*)\*\*/g, '<strong>$1</strong>');
 
     // Paragraphs
-    html = html.split('\n\n').map(p => p.trim() ? `<p>${p.replace(/\n/g, '<br/>')}</p>` : '').join('');
+    html = html.split('\n\n').map(p => {
+        const trimmed = p.trim();
+        if (!trimmed) return '';
+        // If it's already a block element from our processing or from Gemini, don't wrap it in <p>
+        if (trimmed.startsWith('<h1') || trimmed.startsWith('<h2') || trimmed.startsWith('<p')) {
+            return trimmed;
+        }
+        return `<p>${trimmed.replace(/\n/g, '<br/>')}</p>`
+    }).join('');
 
     return html;
 };
