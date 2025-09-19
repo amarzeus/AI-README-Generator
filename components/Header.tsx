@@ -36,7 +36,7 @@ const Header: React.FC = () => {
         </div>
         <div className="flex items-center space-x-4">
           <a
-            href="https://www.linkedin.com/in/amar-kumar-profile"
+            href="https://www.linkedin.com/in/amarmahakal/"
             target="_blank"
             rel="noopener noreferrer"
             title="LinkedIn Profile"
@@ -45,7 +45,7 @@ const Header: React.FC = () => {
             <LinkedInIcon />
           </a>
           <a
-            href="https://twitter.com/amar_zeus"
+            href="https://x.com/its_meAmar"
             target="_blank"
             rel="noopener noreferrer"
             title="Twitter Profile"

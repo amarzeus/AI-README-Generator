@@ -46,7 +46,14 @@ const simpleMarkdownToHtml = (md: string) => {
 
 
     // Images (for badges and stats)
-    html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img alt="$1" src="$2" class="inline-block h-8 my-1 mr-1" />');
+    html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_match, alt: string, src: string) => {
+        if (src.includes('github-readme-stats.vercel.app')) {
+            // GitHub stats cards are larger and should be rendered as block-like elements
+            return `<img alt="${alt}" src="${src}" class="my-2" />`;
+        }
+        // Shields.io badges for skills
+        return `<img alt="${alt}" src="${src}" class="inline-block h-8 my-1 mr-1" />`;
+    });
 
     // Bold
     html = html.replace(/\*\*(.*)\*\*/g, '<strong>$1</strong>');
