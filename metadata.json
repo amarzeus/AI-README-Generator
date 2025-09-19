@@ -1,5 +1,15 @@
 {
-  "name": "GitHub README Generator",
+  "name": "AI-Powered GitHub README Generator",
   "description": "A tool that helps developers create stunning GitHub profile READMEs. Simply fill in your details, and let Gemini craft a professional, personalized, and visually appealing markdown file to make your profile stand out to recruiters and fellow developers.",
+  "keywords": [
+    "GitHub",
+    "README",
+    "generator",
+    "AI",
+    "Gemini",
+    "developer tools",
+    "profile",
+    "markdown"
+  ],
   "requestFramePermissions": []
 }
