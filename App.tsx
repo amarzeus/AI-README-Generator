@@ -6,7 +6,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import InputForm from './components/InputForm';
 import Preview from './components/Preview';
-import SocialCardModal from './components/SocialCardModal';
+import ShareModal from './components/ShareModal';
 
 const initialProfile: UserProfile = {
   name: 'Amar Kumar',
@@ -56,7 +56,7 @@ function App() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -77,6 +77,7 @@ function App() {
     try {
       const generatedMarkdown = await generateReadme(userProfile);
       setMarkdown(generatedMarkdown);
+      setIsShareModalOpen(true);
     } catch (e) {
       const errorMessage = e instanceof Error ? e.message : 'An unknown error occurred.';
       setError(errorMessage);
@@ -103,16 +104,15 @@ function App() {
             <Preview 
               markdown={markdown}
               isLoading={isLoading}
-              onShare={() => setIsModalOpen(true)}
             />
           </div>
         </div>
       </main>
       <Footer />
-      <SocialCardModal 
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        userProfile={userProfile}
+      <ShareModal 
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        markdown={markdown}
       />
     </div>
   );
