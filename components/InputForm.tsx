@@ -238,10 +238,14 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
                         <option value="radical">Radical</option>
                         <option value="merko">Merko</option>
                         <option value="gruvbox">Gruvbox</option>
-                        <option value="dark">Dark</option>
-                        <option value="light">Light</option>
+                        <option value="dracula">Dracula</option>
+                        <option value="onedark">One Dark</option>
+                        <option value="cobalt">Cobalt</option>
+                        <option value="synthwave">Synthwave</option>
                         <option value="tokyonight">Tokyo Night</option>
                         <option value="solarized_dark">Solarized Dark</option>
+                        <option value="dark">Dark</option>
+                        <option value="light">Light</option>
                     </Select>
                 </div>
                  <div className="space-y-2">
@@ -259,6 +263,25 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
                                 <Label htmlFor={`hide-${stat}`} className="capitalize font-normal text-gray-700 dark:text-gray-300">{stat}</Label>
                             </div>
                         ))}
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    <div className="flex items-center space-x-2">
+                        <Switch
+                            id="hide-border"
+                            checked={userProfile.githubStatsHideBorder}
+                            onCheckedChange={(checked) => handleChange('githubStatsHideBorder', checked)}
+                        />
+                        <Label htmlFor="hide-border" className="font-normal">Hide Card Border</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                        <Switch
+                            id="disable-animations"
+                            checked={userProfile.githubStatsDisableAnimations}
+                            onCheckedChange={(checked) => handleChange('githubStatsDisableAnimations', checked)}
+                        />
+                        <Label htmlFor="disable-animations" className="font-normal">Disable Animations</Label>
                     </div>
                 </div>
 

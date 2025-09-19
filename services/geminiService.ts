@@ -27,28 +27,30 @@ const createPrompt = (profile: UserProfile): string => {
     username: profile.githubUsername,
     show_icons: 'true',
     theme: profile.githubStatsTheme,
-    hide_border: 'true',
     rank_icon: 'github',
   });
   if (hiddenStats) statsCardParams.append('hide', hiddenStats);
   if (profile.githubStatsBorderRadius) statsCardParams.append('border_radius', profile.githubStatsBorderRadius);
+  if (profile.githubStatsHideBorder) statsCardParams.append('hide_border', 'true');
+  if (profile.githubStatsDisableAnimations) statsCardParams.append('disable_animations', 'true');
   const statsCardUrl = `https://github-readme-stats.vercel.app/api?${statsCardParams.toString()}`;
 
   const streakCardParams = new URLSearchParams({
     user: profile.githubUsername,
     theme: profile.githubStatsTheme,
-    hide_border: 'true',
   });
   if (profile.githubStatsBorderRadius) streakCardParams.append('border_radius', profile.githubStatsBorderRadius);
+  if (profile.githubStatsHideBorder) streakCardParams.append('hide_border', 'true');
   const streakCardUrl = `https://github-readme-streak-stats.herokuapp.com/?${streakCardParams.toString()}`;
 
   const topLangsCardParams = new URLSearchParams({
     username: profile.githubUsername,
     layout: profile.githubStatsTopLangsLayout,
     theme: profile.githubStatsTheme,
-    hide_border: 'true',
   });
   if (profile.githubStatsBorderRadius) topLangsCardParams.append('border_radius', profile.githubStatsBorderRadius);
+  if (profile.githubStatsHideBorder) topLangsCardParams.append('hide_border', 'true');
+  if (profile.githubStatsDisableAnimations) topLangsCardParams.append('disable_animations', 'true');
   const topLangsCardUrl = `https://github-readme-stats.vercel.app/api/top-langs/?${topLangsCardParams.toString()}`;
   
   const styleInstructions = getStyleInstructions(profile.generationStyle);

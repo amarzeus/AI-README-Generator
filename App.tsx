@@ -21,6 +21,8 @@ const initialProfile: UserProfile = {
   githubStatsHideStats: [],
   githubStatsTopLangsLayout: 'compact',
   githubStatsBorderRadius: '8',
+  githubStatsHideBorder: true,
+  githubStatsDisableAnimations: false,
   profilePicture: '',
   portfolioUrl: '',
   blogUrl: '',
