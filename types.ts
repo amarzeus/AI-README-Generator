@@ -14,6 +14,9 @@ export interface UserProfile {
   website: string;
   showGithubStats: boolean;
   githubStatsTheme: string;
+  githubStatsHideStats: string[];
+  githubStatsTopLangsLayout: string;
+  githubStatsBorderRadius: string;
   profilePicture: string; // This will be a base64 data URL
   portfolioUrl: string;
   blogUrl: string;

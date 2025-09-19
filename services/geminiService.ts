@@ -8,6 +8,36 @@ if (!process.env.API_KEY) {
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 const createPrompt = (profile: UserProfile): string => {
+  const hiddenStats = profile.githubStatsHideStats.join(',');
+
+  const statsCardParams = new URLSearchParams({
+    username: profile.githubUsername,
+    show_icons: 'true',
+    theme: profile.githubStatsTheme,
+    hide_border: 'true',
+    rank_icon: 'github',
+  });
+  if (hiddenStats) statsCardParams.append('hide', hiddenStats);
+  if (profile.githubStatsBorderRadius) statsCardParams.append('border_radius', profile.githubStatsBorderRadius);
+  const statsCardUrl = `https://github-readme-stats.vercel.app/api?${statsCardParams.toString()}`;
+
+  const streakCardParams = new URLSearchParams({
+    user: profile.githubUsername,
+    theme: profile.githubStatsTheme,
+    hide_border: 'true',
+  });
+  if (profile.githubStatsBorderRadius) streakCardParams.append('border_radius', profile.githubStatsBorderRadius);
+  const streakCardUrl = `https://github-readme-streak-stats.herokuapp.com/?${streakCardParams.toString()}`;
+
+  const topLangsCardParams = new URLSearchParams({
+    username: profile.githubUsername,
+    layout: profile.githubStatsTopLangsLayout,
+    theme: profile.githubStatsTheme,
+    hide_border: 'true',
+  });
+  if (profile.githubStatsBorderRadius) topLangsCardParams.append('border_radius', profile.githubStatsBorderRadius);
+  const topLangsCardUrl = `https://github-readme-stats.vercel.app/api/top-langs/?${topLangsCardParams.toString()}`;
+
   return `
 You are an expert GitHub profile README generator. Your task is to create a visually appealing, professional, and engaging README.md file based on the following JSON data.
 The response must be **only** valid Markdown, with one exception for the profile picture as noted below.
@@ -58,9 +88,9 @@ ${JSON.stringify(profile, null, 2)}
     *   Blog: \`[Blog](${profile.blogUrl})\`
 
 8.  **GitHub Stats:** If 'showGithubStats' is true, include a "📊 GitHub Stats" section (##).
-    *   Add the GitHub Readme Stats card: \`https://github-readme-stats.vercel.app/api?username=${profile.githubUsername}&show_icons=true&theme=${profile.githubStatsTheme}&hide_border=true&rank_icon=github\`
-    *   Include the GitHub Streak Stats card: \`https://github-readme-streak-stats.herokuapp.com/?user=${profile.githubUsername}&theme=${profile.githubStatsTheme}&hide_border=true\`
-    *   Finally, include the Top Languages card: \`https://github-readme-stats.vercel.app/api/top-langs/?username=${profile.githubUsername}&layout=compact&theme=${profile.githubStatsTheme}&hide_border=true\`
+    *   Add the GitHub Readme Stats card: \`${statsCardUrl}\`
+    *   Include the GitHub Streak Stats card: \`${streakCardUrl}\`
+    *   Finally, include the Top Languages card: \`${topLangsCardUrl}\`
 
 9.  **Final Output:** The entire response must be a single block of valid Markdown code. Do not include explanations, comments, or wrap it in markdown code fences (\`\`\`). The only exception is the HTML \`<img>\` tag for the profile picture as instructed.
 `;

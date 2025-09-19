@@ -32,6 +32,9 @@ const App: React.FC = () => {
     ],
     showGithubStats: true,
     githubStatsTheme: 'radical',
+    githubStatsHideStats: [],
+    githubStatsTopLangsLayout: 'compact',
+    githubStatsBorderRadius: '8',
     profilePicture: '',
   });
 

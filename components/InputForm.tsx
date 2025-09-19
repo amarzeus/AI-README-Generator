@@ -35,6 +35,8 @@ const PlusIcon: React.FC = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-plus h-4 w-4 mr-2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
 );
 
+const STATS_OPTIONS = ['stars', 'commits', 'prs', 'issues', 'contribs'] as const;
+
 const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGenerate, isLoading }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -78,6 +80,15 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
       };
       reader.readAsDataURL(file);
     }
+  };
+  
+  const handleHideStatsChange = (stat: string) => {
+    const currentHidden = userProfile.githubStatsHideStats;
+    const isHidden = currentHidden.includes(stat);
+    const newHidden = isHidden
+      ? currentHidden.filter(s => s !== stat)
+      : [...currentHidden, stat];
+    handleChange('githubStatsHideStats', newHidden);
   };
 
   const triggerFileSelect = () => fileInputRef.current?.click();
@@ -216,21 +227,64 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
             <Label htmlFor="github-stats">Include GitHub Stats Card</Label>
         </div>
         {userProfile.showGithubStats && (
-            <div className="space-y-2">
-                <Label htmlFor="github-stats-theme">Stats Card Theme</Label>
-                <Select
-                    id="github-stats-theme"
-                    value={userProfile.githubStatsTheme}
-                    onChange={(e) => handleChange('githubStatsTheme', e.target.value)}
-                >
-                    <option value="radical">Radical</option>
-                    <option value="merko">Merko</option>
-                    <option value="gruvbox">Gruvbox</option>
-                    <option value="dark">Dark</option>
-                    <option value="light">Light</option>
-                    <option value="tokyonight">Tokyo Night</option>
-                    <option value="solarized_dark">Solarized Dark</option>
-                </Select>
+             <div className="space-y-4 rounded-md border border-gray-700 p-4">
+                <div className="space-y-2">
+                    <Label htmlFor="github-stats-theme">Stats Card Theme</Label>
+                    <Select
+                        id="github-stats-theme"
+                        value={userProfile.githubStatsTheme}
+                        onChange={(e) => handleChange('githubStatsTheme', e.target.value)}
+                    >
+                        <option value="radical">Radical</option>
+                        <option value="merko">Merko</option>
+                        <option value="gruvbox">Gruvbox</option>
+                        <option value="dark">Dark</option>
+                        <option value="light">Light</option>
+                        <option value="tokyonight">Tokyo Night</option>
+                        <option value="solarized_dark">Solarized Dark</option>
+                    </Select>
+                </div>
+                 <div className="space-y-2">
+                    <Label>Hide Specific Stats</Label>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-2">
+                        {STATS_OPTIONS.map(stat => (
+                            <div key={stat} className="flex items-center space-x-2">
+                                <input
+                                    type="checkbox"
+                                    id={`hide-${stat}`}
+                                    className="h-4 w-4 rounded border-gray-500 bg-gray-800 text-indigo-600 focus:ring-indigo-500"
+                                    checked={userProfile.githubStatsHideStats.includes(stat)}
+                                    onChange={() => handleHideStatsChange(stat)}
+                                />
+                                <Label htmlFor={`hide-${stat}`} className="capitalize font-normal text-gray-300">{stat}</Label>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                        <Label htmlFor="top-langs-layout">Top Languages Layout</Label>
+                        <Select
+                            id="top-langs-layout"
+                            value={userProfile.githubStatsTopLangsLayout}
+                            onChange={(e) => handleChange('githubStatsTopLangsLayout', e.target.value)}
+                        >
+                            <option value="compact">Compact</option>
+                            <option value="normal">Normal</option>
+                        </Select>
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="border-radius">Card Border Radius (px)</Label>
+                        <Input
+                            id="border-radius"
+                            type="number"
+                            value={userProfile.githubStatsBorderRadius}
+                            onChange={(e) => handleChange('githubStatsBorderRadius', e.target.value)}
+                            placeholder="e.g., 8"
+                        />
+                    </div>
+                </div>
             </div>
         )}
         <Button onClick={onGenerate} disabled={isLoading} className="w-full">
