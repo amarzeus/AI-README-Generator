@@ -115,8 +115,10 @@ ${JSON.stringify(profile, null, 2)}
 5.  **Projects Section:**
     *   Create a section with a level 2 heading (##) titled "🚀 My Projects".
     *   **Only include this section if the 'projects' array in the JSON is not empty.**
-    *   For each project in the array, create a level 3 heading (###) with the project name linked to its URL: \`### [PROJECT_NAME](PROJECT_URL)\`
-    *   Below the heading, add the project 'description'.
+    *   For each project in the array:
+        *   Create a level 3 heading (###) with the project name linked to its URL: \`### [PROJECT_NAME](PROJECT_URL)\`
+        *   **If the project object contains a non-empty 'image' field (which is a base64 data URL), you MUST display it right after the heading.** Use an HTML \`<img>\` tag to render it. The image should be responsive and have a subtle rounded border. Use this exact HTML structure: \`<p align="center"><img src="${"project.image"}" alt="${"project.name"}" style="width:100%; max-width: 600px; border-radius: 8px; margin-top: 8px; margin-bottom: 8px;"></p>\`
+        *   Below the heading (and image, if present), add the project 'description'.
     
 6.  **Education Section:**
     *   Create a section with a level 2 heading (##) titled "🎓 Education".

@@ -2,6 +2,7 @@ export interface Project {
   name: string;
   description: string;
   url: string;
+  image?: string; // Base64 data URL
 }
 
 export interface ProfilePictureStyle {

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import type { UserProfile, Project } from '../types';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
 import { Input } from './ui/Input';
@@ -31,6 +31,10 @@ const UserIcon: React.FC = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-user-round text-gray-500 dark:text-gray-400 w-8 h-8"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
 );
 
+const ImageIcon: React.FC = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-image w-8 h-8 text-gray-500 dark:text-gray-400"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+);
+
 const PlusIcon: React.FC = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-plus h-4 w-4 mr-2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
 );
@@ -39,6 +43,8 @@ const STATS_OPTIONS = ['stars', 'commits', 'prs', 'issues', 'contribs'] as const
 
 const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGenerate, isLoading }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const projectImageInputRef = useRef<HTMLInputElement>(null);
+  const [activeProjectIndex, setActiveProjectIndex] = useState<number | null>(null);
 
   const handleChange = <K extends keyof UserProfile,>(field: K, value: UserProfile[K]) => {
     setUserProfile(prev => ({ ...prev, [field]: value }));
@@ -74,7 +80,7 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
   };
 
   const handleAddProject = () => {
-    handleChange('projects', [...userProfile.projects, { name: '', description: '', url: '' }]);
+    handleChange('projects', [...userProfile.projects, { name: '', description: '', url: '', image: '' }]);
   };
 
   const handleRemoveProject = (index: number) => {
@@ -94,6 +100,26 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
       reader.readAsDataURL(file);
     }
   };
+
+  const triggerProjectImageUpload = (index: number) => {
+    setActiveProjectIndex(index);
+    projectImageInputRef.current?.click();
+  };
+
+  const handleProjectImageFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file && activeProjectIndex !== null) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result) {
+          handleProjectChange(activeProjectIndex, 'image', event.target.result as string);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+    if (e.target) e.target.value = ''; // Allow re-uploading the same file
+    setActiveProjectIndex(null);
+  };
   
   const handleHideStatsChange = (stat: string) => {
     const currentHidden = userProfile.githubStatsHideStats;
@@ -112,6 +138,13 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
         <CardTitle>Your Details</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
+        <input
+            type="file"
+            ref={projectImageInputRef}
+            onChange={handleProjectImageFileChange}
+            accept="image/png, image/jpeg, image/gif"
+            className="hidden"
+        />
         <div className="space-y-2">
           <Label htmlFor="name">Name</Label>
           <Input id="name" value={userProfile.name} onChange={e => handleChange('name', e.target.value)} placeholder="e.g., Ada Lovelace" />
@@ -231,17 +264,43 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
                          <Button onClick={() => handleRemoveProject(index)} variant="ghost" size="sm" className="absolute top-2 right-2 text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/50">
                             <TrashIcon />
                         </Button>
-                        <div className="space-y-2">
-                            <Label htmlFor={`project-name-${index}`}>Project Name</Label>
-                            <Input id={`project-name-${index}`} value={project.name} onChange={e => handleProjectChange(index, 'name', e.target.value)} placeholder="e.g., My Awesome App" />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor={`project-desc-${index}`}>Description</Label>
-                            <Textarea id={`project-desc-${index}`} value={project.description} onChange={e => handleProjectChange(index, 'description', e.target.value)} placeholder="A short description of your project." rows={2} />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor={`project-url-${index}`}>Live URL</Label>
-                            <Input id={`project-url-${index}`} value={project.url} onChange={e => handleProjectChange(index, 'url', e.target.value)} placeholder="https://your-project.com" />
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="md:col-span-2 space-y-3">
+                                <div className="space-y-2">
+                                    <Label htmlFor={`project-name-${index}`}>Project Name</Label>
+                                    <Input id={`project-name-${index}`} value={project.name} onChange={e => handleProjectChange(index, 'name', e.target.value)} placeholder="e.g., My Awesome App" />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor={`project-desc-${index}`}>Description</Label>
+                                    <Textarea id={`project-desc-${index}`} value={project.description} onChange={e => handleProjectChange(index, 'description', e.target.value)} placeholder="A short description of your project." rows={2} />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor={`project-url-${index}`}>Live URL</Label>
+                                    <Input id={`project-url-${index}`} value={project.url} onChange={e => handleProjectChange(index, 'url', e.target.value)} placeholder="https://your-project.com" />
+                                </div>
+                            </div>
+                            <div className="space-y-2">
+                                <Label>Project Image</Label>
+                                <div className="aspect-video w-full rounded-md bg-gray-100 dark:bg-gray-700/50 flex items-center justify-center overflow-hidden">
+                                    {project.image ? (
+                                        <img src={project.image} alt={`${project.name} preview`} className="w-full h-full object-cover" />
+                                    ) : (
+                                        <ImageIcon />
+                                    )}
+                                </div>
+                                <div className="flex gap-2 mt-2">
+                                    <Button onClick={() => triggerProjectImageUpload(index)} variant="ghost" size="sm" className="w-full text-xs">
+                                        <UploadIcon />
+                                        Upload
+                                    </Button>
+                                    {project.image && (
+                                        <Button onClick={() => handleProjectChange(index, 'image', '')} variant="ghost" size="sm" className="w-full text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/50 text-xs">
+                                            <TrashIcon />
+                                            Remove
+                                        </Button>
+                                    )}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 ))}

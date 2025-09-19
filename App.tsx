@@ -42,7 +42,8 @@ const initialProfile: UserProfile = {
     {
       name: 'AI GitHub README Generator',
       description: 'A tool that generates beautiful and informative GitHub profile READMEs using the Gemini API.',
-      url: 'https://github.com/amarzeus/ai-github-readme-generator'
+      url: 'https://github.com/amarzeus/ai-github-readme-generator',
+      image: ''
     }
   ],
   generationStyle: 'Balanced',
