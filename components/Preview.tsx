@@ -47,7 +47,7 @@ const simpleMarkdownToHtml = (md: string) => {
 
     // Images (for badges and stats)
     html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_match, alt: string, src: string) => {
-        if (src.includes('github-readme-stats.vercel.app')) {
+        if (src.includes('github-readme-stats.vercel.app') || src.includes('github-readme-streak-stats.herokuapp.com')) {
             // GitHub stats cards are larger and should be rendered as block-like elements
             return `<img alt="${alt}" src="${src}" class="my-2" />`;
         }
