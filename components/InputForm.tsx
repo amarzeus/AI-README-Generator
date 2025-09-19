@@ -153,7 +153,7 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
         <div className="space-y-4">
             <Label>Profile Picture</Label>
             <div className="flex items-center gap-4">
-                <div className="w-20 h-20 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center overflow-hidden">
+                <div className="w-20 h-20 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center overflow-hidden">
                     {userProfile.profilePicture ? (
                         <img src={userProfile.profilePicture} alt="Profile Preview" className="w-full h-full object-cover" />
                     ) : (
@@ -161,7 +161,7 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
                     )}
                 </div>
                 <div className="flex flex-col gap-2">
-                    <Button onClick={triggerFileSelect} variant="ghost">
+                    <Button onClick={triggerFileSelect} variant="default" size="sm">
                         <UploadIcon />
                         Upload Image
                     </Button>
@@ -180,7 +180,7 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
                     )}
                 </div>
             </div>
-             <div className="space-y-4 rounded-md border border-gray-200 dark:border-gray-700 p-4">
+             <div className="space-y-4 rounded-md border border-gray-300 dark:border-gray-700 p-4">
                 <Label className="font-semibold">Profile Picture Styling</Label>
                 <div className="flex items-center justify-between">
                     <Label htmlFor="is-circular" className="font-normal text-sm">Circular Crop</Label>
@@ -260,7 +260,7 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
             <Label className="text-lg font-semibold">Projects</Label>
             <div className="mt-2 space-y-4">
                 {userProfile.projects.map((project, index) => (
-                    <div key={index} className="border border-gray-200 dark:border-gray-700 p-4 rounded-md space-y-3 relative">
+                    <div key={index} className="border border-gray-300 dark:border-gray-700 p-4 rounded-md space-y-3 relative">
                          <Button onClick={() => handleRemoveProject(index)} variant="ghost" size="sm" className="absolute top-2 right-2 text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/50">
                             <TrashIcon />
                         </Button>
@@ -281,7 +281,7 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
                             </div>
                             <div className="space-y-2">
                                 <Label>Project Image</Label>
-                                <div className="aspect-video w-full rounded-md bg-gray-100 dark:bg-gray-700/50 flex items-center justify-center overflow-hidden">
+                                <div className="aspect-video w-full rounded-md bg-gray-100 dark:bg-gray-800 flex items-center justify-center overflow-hidden">
                                     {project.image ? (
                                         <img src={project.image} alt={`${project.name} preview`} className="w-full h-full object-cover" />
                                     ) : (
@@ -289,7 +289,7 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
                                     )}
                                 </div>
                                 <div className="flex gap-2 mt-2">
-                                    <Button onClick={() => triggerProjectImageUpload(index)} variant="ghost" size="sm" className="w-full text-xs">
+                                    <Button onClick={() => triggerProjectImageUpload(index)} variant="default" size="sm" className="w-full text-xs">
                                         <UploadIcon />
                                         Upload
                                     </Button>
@@ -304,7 +304,7 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
                         </div>
                     </div>
                 ))}
-                 <Button onClick={handleAddProject} variant="ghost" className="w-full border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500">
+                 <Button onClick={handleAddProject} variant="default" className="w-full border-dashed">
                     <PlusIcon />
                     Add Project
                 </Button>
@@ -313,7 +313,7 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
 
         <div>
             <Label className="text-lg font-semibold">Education</Label>
-            <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4 border border-gray-200 dark:border-gray-700 p-4 rounded-md">
+            <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4 border border-gray-300 dark:border-gray-700 p-4 rounded-md">
                  <div className="space-y-2 md:col-span-2">
                     <Label htmlFor="university">University Name</Label>
                     <Input id="university" value={userProfile.education.university} onChange={e => handleEducationChange('university', e.target.value)} placeholder="e.g., Stanford University" />
@@ -364,7 +364,7 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
             <Label htmlFor="github-stats">Include GitHub Stats Card</Label>
         </div>
         {userProfile.showGithubStats && (
-             <div className="space-y-4 rounded-md border border-gray-200 dark:border-gray-700 p-4">
+             <div className="space-y-4 rounded-md border border-gray-300 dark:border-gray-700 p-4">
                 <div className="space-y-2">
                     <Label htmlFor="github-stats-theme">Stats Card Theme</Label>
                     <Select
@@ -393,11 +393,11 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
                                 <input
                                     type="checkbox"
                                     id={`hide-${stat}`}
-                                    className="h-4 w-4 rounded border-gray-400 dark:border-gray-500 bg-gray-200 dark:bg-gray-800 text-indigo-600 focus:ring-indigo-500"
+                                    className="h-4 w-4 rounded border-gray-400 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-blue-600 focus:ring-blue-500"
                                     checked={userProfile.githubStatsHideStats.includes(stat)}
                                     onChange={() => handleHideStatsChange(stat)}
                                 />
-                                <Label htmlFor={`hide-${stat}`} className="capitalize font-normal text-gray-700 dark:text-gray-300">{stat}</Label>
+                                <Label htmlFor={`hide-${stat}`} className="capitalize font-normal">{stat}</Label>
                             </div>
                         ))}
                     </div>
@@ -464,7 +464,7 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
                 {userProfile.generationStyle === 'Precise' && 'Formal and direct, focusing on technical details. No emojis.'}
             </p>
         </div>
-        <Button onClick={onGenerate} disabled={isLoading} className="w-full">
+        <Button onClick={onGenerate} disabled={isLoading} variant="primary" className="w-full">
             {isLoading ? (
                 <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
             ) : (

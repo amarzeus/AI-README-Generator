@@ -28,27 +28,80 @@
       body {
         font-family: 'Inter', sans-serif;
       }
-      .github-preview-scrollbar::-webkit-scrollbar {
-        width: 8px;
+      /* GitHub README Preview Styles */
+      .markdown-body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+        -webkit-text-size-adjust: 100%;
+        font-size: 16px;
+        line-height: 1.5;
+        word-wrap: break-word;
       }
-      .github-preview-scrollbar::-webkit-scrollbar-track {
-        background: #374151; /* gray-700 */
+      html .markdown-body h1, html .markdown-body h2 { border-bottom: 1px solid #d8dee4; padding-bottom: .3em; }
+      html.dark .markdown-body h1, html.dark .markdown-body h2 { border-bottom-color: #21262d; }
+      .markdown-body h1 { font-size: 2em; font-weight: 600; }
+      .markdown-body h2 { font-size: 1.5em; font-weight: 600; }
+      .markdown-body h3 { font-size: 1.25em; font-weight: 600; }
+      .markdown-body a { color: #0969da; text-decoration: none; }
+      html.dark .markdown-body a { color: #58a6ff; }
+      .markdown-body a:hover { text-decoration: underline; }
+      .markdown-body code {
+          padding: .2em .4em;
+          margin: 0;
+          font-size: 85%;
+          white-space: break-spaces;
+          background-color: rgba(175, 184, 193, 0.2);
+          border-radius: 6px;
       }
-      html.dark .github-preview-scrollbar::-webkit-scrollbar-track {
-        background: #1f2937; /* dark:gray-800 */
+      html.dark .markdown-body code { background-color: rgba(110, 118, 129, 0.4); }
+      .markdown-body img { max-width: 100%; }
+
+      /* GitHub Fork Ribbon */
+      .github-fork-ribbon {
+        width: 12.1em;
+        height: 12.1em;
+        position: fixed;
+        overflow: hidden;
+        top: 0;
+        right: 0;
+        z-index: 9999;
+        pointer-events: none;
+        font-size: 13px;
+        text-decoration: none;
+        text-indent: -999999px;
       }
-      .github-preview-scrollbar::-webkit-scrollbar-thumb {
-        background: #9ca3af; /* gray-400 */
-        border-radius: 4px;
+
+      .github-fork-ribbon:before, .github-fork-ribbon:after {
+        position: absolute;
+        display: block;
+        width: 15.38em;
+        height: 1.54em;
+        top: 3.23em;
+        right: -3.23em;
+        transform: rotate(45deg);
       }
-       html.dark .github-preview-scrollbar::-webkit-scrollbar-thumb {
-        background: #4b5563; /* dark:gray-600 */
+
+      .github-fork-ribbon:before {
+        content: "";
+        padding: .38em 0;
+        background-color: #238636;
+        box-shadow: 0 .15em .23em 0 rgba(0, 0, 0, 0.5);
+        pointer-events: auto;
       }
-      .github-preview-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: #6b7280; /* gray-500 */
-      }
-      html.dark .github-preview-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: #374151; /* dark:gray-700 */
+
+      .github-fork-ribbon:after {
+        content: "Fork me on GitHub";
+        color: #fff;
+        font: 700 1em "Helvetica Neue", Helvetica, Arial, sans-serif;
+        line-height: 1.54em;
+        text-decoration: none;
+        text-shadow: 0 -0.08em rgba(0, 0, 0, 0.5);
+        text-align: center;
+        text-indent: 0;
+        padding: .15em 0;
+        margin: .15em 0;
+        border-width: .08em 0;
+        border-style: dotted;
+        border-color: rgba(255, 255, 255, 0.7);
       }
     </style>
   <script type="importmap">
@@ -65,6 +118,7 @@
 </script>
 </head>
   <body>
+    <a href="https://github.com/amarzeus/ai-github-readme-generator" class="github-fork-ribbon" title="Fork me on GitHub">Fork me on GitHub</a>
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>

@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 const Label = React.forwardRef<
@@ -7,7 +6,7 @@ const Label = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <label
     ref={ref}
-    className={`text-sm font-medium leading-none text-gray-700 dark:text-gray-300 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${className}`}
+    className={`text-sm font-semibold leading-none text-gray-800 dark:text-gray-300 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${className}`}
     {...props}
   />
 ));
