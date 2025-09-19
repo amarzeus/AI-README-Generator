@@ -150,9 +150,25 @@ export const generateReadme = async (profile: UserProfile): Promise<string> => {
     return response.text;
   } catch (error) {
     console.error("Error generating README with Gemini:", error);
+    
+    let errorMessage = "An unknown error occurred while communicating with the Gemini API.";
+
     if (error instanceof Error) {
-        throw new Error(`Gemini API Error: ${error.message}`);
+        const lowerCaseMessage = error.message.toLowerCase();
+        
+        if (lowerCaseMessage.includes('api key not valid')) {
+            errorMessage = 'The provided API key is invalid. Please ensure it is set correctly.';
+        } else if (lowerCaseMessage.includes('quota') || lowerCaseMessage.includes('rate limit')) {
+            errorMessage = 'You have exceeded your API quota for the Gemini API. Please check your usage or try again later.';
+        } else if (lowerCaseMessage.includes('safety') || lowerCaseMessage.includes('blocked')) {
+            errorMessage = 'The request was blocked due to safety settings. Please try adjusting your input text.';
+        } else if (error.message.includes('[400]')) {
+            errorMessage = `The request was malformed (Error 400). This can happen if the input data is too large or contains unexpected values. Details: ${error.message}`;
+        } else {
+            errorMessage = `Gemini API Error: ${error.message}`;
+        }
     }
-    throw new Error("An unknown error occurred while communicating with the Gemini API.");
+    
+    throw new Error(errorMessage);
   }
 };
