@@ -57,6 +57,37 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [isRibbonVisible, setIsRibbonVisible] = useState(true);
+
+  useEffect(() => {
+    const closeBtn = document.getElementById('close-ribbon-btn');
+    const handleClick = () => {
+      setIsRibbonVisible(false);
+    };
+    if (closeBtn) {
+      closeBtn.addEventListener('click', handleClick);
+    }
+    return () => {
+      if (closeBtn) {
+        closeBtn.removeEventListener('click', handleClick);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const ribbon = document.getElementById('github-ribbon');
+    const closeBtn = document.getElementById('close-ribbon-btn');
+    if (ribbon && closeBtn) {
+      if (isRibbonVisible) {
+        ribbon.classList.remove('hidden');
+        closeBtn.classList.remove('hidden');
+      } else {
+        ribbon.classList.add('hidden');
+        closeBtn.classList.add('hidden');
+      }
+    }
+  }, [isRibbonVisible]);
+
 
   useEffect(() => {
     const root = window.document.documentElement;

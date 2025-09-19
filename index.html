@@ -103,6 +103,35 @@
         border-style: dotted;
         border-color: rgba(255, 255, 255, 0.7);
       }
+
+      #close-ribbon-btn {
+        position: fixed;
+        top: 8px;
+        right: 8px;
+        z-index: 10000;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: none;
+        background-color: rgba(0, 0, 0, 0.4);
+        color: #fff;
+        font-size: 20px;
+        line-height: 1;
+        font-weight: bold;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        padding-bottom: 2px;
+        transition: background-color 0.2s ease;
+      }
+      #close-ribbon-btn:hover {
+        background-color: rgba(0, 0, 0, 0.6);
+      }
+      .hidden {
+        display: none !important;
+      }
     </style>
   <script type="importmap">
 {
@@ -118,7 +147,8 @@
 </script>
 </head>
   <body>
-    <a href="https://github.com/amarzeus/ai-github-readme-generator" class="github-fork-ribbon" title="Fork me on GitHub">Fork me on GitHub</a>
+    <a href="https://github.com/amarzeus/ai-github-readme-generator" id="github-ribbon" class="github-fork-ribbon" title="Fork me on GitHub">Fork me on GitHub</a>
+    <button id="close-ribbon-btn" title="Close ribbon" aria-label="Close Fork me on GitHub ribbon">&times;</button>
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>
