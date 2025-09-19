@@ -36,7 +36,7 @@ Ready to contribute some code? Here’s how to set up your fork and submit a pul
 
 2.  **Clone your fork** to your local machine:
     ```bash
-    git clone https://github.com/YOUR_USERNAME/ai-github-readme-generator.git
+    git clone https://github.com/YOUR_USERNAME/ai-readme-generator.git
     cd ai-github-readme-generator
     ```
 
