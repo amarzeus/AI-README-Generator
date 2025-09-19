@@ -26,4 +26,5 @@ export interface UserProfile {
     graduationYear: string;
   };
   projects: Project[];
+  generationStyle: 'Creative' | 'Balanced' | 'Precise';
 }

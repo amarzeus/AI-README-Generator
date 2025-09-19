@@ -36,6 +36,7 @@ const initialProfile: UserProfile = {
       url: 'https://github.com/amarzeus/ai-github-readme-generator'
     }
   ],
+  generationStyle: 'Balanced',
 };
 
 

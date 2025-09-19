@@ -287,6 +287,23 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
                 </div>
             </div>
         )}
+        <div className="space-y-2 pt-2">
+            <Label htmlFor="generation-style">Generation Style</Label>
+            <Select
+                id="generation-style"
+                value={userProfile.generationStyle}
+                onChange={(e) => handleChange('generationStyle', e.target.value as UserProfile['generationStyle'])}
+            >
+                <option value="Creative">Creative</option>
+                <option value="Balanced">Balanced</option>
+                <option value="Precise">Precise</option>
+            </Select>
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+                {userProfile.generationStyle === 'Creative' && 'Enthusiastic tone, lots of emojis, and a fun layout.'}
+                {userProfile.generationStyle === 'Balanced' && 'A professional but friendly tone with a clean layout.'}
+                {userProfile.generationStyle === 'Precise' && 'Formal and direct, focusing on technical details. No emojis.'}
+            </p>
+        </div>
         <Button onClick={onGenerate} disabled={isLoading} className="w-full">
             {isLoading ? (
                 <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>

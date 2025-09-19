@@ -7,6 +7,19 @@ if (!process.env.API_KEY) {
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
+const getStyleInstructions = (style: UserProfile['generationStyle']): string => {
+  switch (style) {
+    case 'Creative':
+      return "You are a creative and enthusiastic assistant. Your tone should be friendly, engaging, and fun. Use emojis liberally to add personality. Feel free to use creative section titles and a more conversational writing style. The goal is a README that pops and shows off personality.";
+    case 'Precise':
+      return "You are a precise and professional assistant. Your tone must be formal, direct, and technical. Do not use any emojis. Focus on clarity, conciseness, and accuracy. The structure should be logical and straightforward, suitable for a corporate or highly technical audience.";
+    case 'Balanced':
+    default:
+      return "You are a helpful and professional assistant. Your tone should be a balance between professional and approachable. Use emojis where appropriate to make the content more engaging, but don't overdo it. The structure should be clean, well-organized, and easy to read.";
+  }
+};
+
+
 const createPrompt = (profile: UserProfile): string => {
   const hiddenStats = profile.githubStatsHideStats.join(',');
 
@@ -37,10 +50,15 @@ const createPrompt = (profile: UserProfile): string => {
   });
   if (profile.githubStatsBorderRadius) topLangsCardParams.append('border_radius', profile.githubStatsBorderRadius);
   const topLangsCardUrl = `https://github-readme-stats.vercel.app/api/top-langs/?${topLangsCardParams.toString()}`;
+  
+  const styleInstructions = getStyleInstructions(profile.generationStyle);
 
   return `
 You are an expert GitHub profile README generator. Your task is to create a visually appealing, professional, and engaging README.md file based on the following JSON data.
 The response must be **only** valid Markdown, with one exception for the profile picture as noted below.
+
+**Generation Style & Tone:**
+${styleInstructions}
 
 **Profile Data:**
 ${JSON.stringify(profile, null, 2)}
