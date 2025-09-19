@@ -10,4 +10,9 @@ export interface UserProfile {
   profilePicture: string; // This will be a base64 data URL
   portfolioUrl: string;
   blogUrl: string;
+  education: {
+    university: string;
+    degree: string;
+    graduationYear: string;
+  };
 }

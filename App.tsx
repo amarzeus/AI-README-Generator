@@ -18,6 +18,11 @@ const App: React.FC = () => {
     website: 'https://portfolio.example.com',
     portfolioUrl: '',
     blogUrl: '',
+    education: {
+      university: 'University of Technology',
+      degree: 'B.Sc. in Computer Science',
+      graduationYear: '2024',
+    },
     showGithubStats: true,
     profilePicture: '',
   });

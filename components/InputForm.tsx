@@ -36,6 +36,16 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
   const handleChange = <K extends keyof UserProfile,>(field: K, value: UserProfile[K]) => {
     setUserProfile(prev => ({ ...prev, [field]: value }));
   };
+  
+  const handleEducationChange = (field: keyof UserProfile['education'], value: string) => {
+    setUserProfile(prev => ({
+        ...prev,
+        education: {
+            ...prev.education,
+            [field]: value,
+        },
+    }));
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -103,6 +113,25 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
           <Label htmlFor="skills">Skills</Label>
           <Textarea id="skills" value={userProfile.skills} onChange={e => handleChange('skills', e.target.value)} placeholder="Comma separated, e.g., React, Next.js, Docker" />
         </div>
+
+        <div>
+            <Label className="text-lg font-semibold">Education</Label>
+            <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4 border border-gray-700 p-4 rounded-md">
+                 <div className="space-y-2 md:col-span-2">
+                    <Label htmlFor="university">University Name</Label>
+                    <Input id="university" value={userProfile.education.university} onChange={e => handleEducationChange('university', e.target.value)} placeholder="e.g., Stanford University" />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="degree">Degree</Label>
+                    <Input id="degree" value={userProfile.education.degree} onChange={e => handleEducationChange('degree', e.target.value)} placeholder="e.g., M.S. in Computer Science" />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="graduationYear">Graduation Year</Label>
+                    <Input id="graduationYear" value={userProfile.education.graduationYear} onChange={e => handleEducationChange('graduationYear', e.target.value)} placeholder="e.g., 2024" />
+                </div>
+            </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="github">GitHub Username</Label>
