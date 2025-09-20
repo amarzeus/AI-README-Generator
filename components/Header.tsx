@@ -74,7 +74,7 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
             <TwitterIcon />
           </a>
           <a
-            href="https://github.com/amarzeus/ai-github-readme-generator"
+            href="https://github.com/amarzeus/ai-readme-generator"
             target="_blank"
             rel="noopener noreferrer"
             title="View on GitHub"
