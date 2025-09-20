@@ -45,6 +45,7 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
   const fileInputRef = useRef<HTMLInputElement>(null);
   const projectImageInputRef = useRef<HTMLInputElement>(null);
   const [activeProjectIndex, setActiveProjectIndex] = useState<number | null>(null);
+  const [urlErrors, setUrlErrors] = useState<Record<string, boolean>>({});
 
   const handleChange = <K extends keyof UserProfile,>(field: K, value: UserProfile[K]) => {
     setUserProfile(prev => ({ ...prev, [field]: value }));
@@ -131,6 +132,22 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
   };
 
   const triggerFileSelect = () => fileInputRef.current?.click();
+
+  const validateUrl = (value: string): boolean => {
+    if (!value) return true; // Don't validate empty strings
+    try {
+        const url = new URL(value);
+        return url.protocol === "http:" || url.protocol === "https:";
+    } catch (e) {
+        return false;
+    }
+  }
+
+  const handleUrlBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+      const { id, value } = e.target;
+      const isValid = validateUrl(value);
+      setUrlErrors(prev => ({ ...prev, [id]: !isValid }));
+  }
 
   return (
     <Card>
@@ -276,7 +293,15 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor={`project-url-${index}`}>Live URL</Label>
-                                    <Input id={`project-url-${index}`} value={project.url} onChange={e => handleProjectChange(index, 'url', e.target.value)} placeholder="https://your-project.com" />
+                                    <Input 
+                                        id={`project-url-${index}`} 
+                                        value={project.url} 
+                                        onChange={e => handleProjectChange(index, 'url', e.target.value)} 
+                                        onBlur={handleUrlBlur}
+                                        placeholder="https://your-project.com" 
+                                        className={urlErrors[`project-url-${index}`] ? 'border-red-500 focus:border-red-500 focus:ring-red-500/30 dark:focus:border-red-500' : ''}
+                                    />
+                                    {urlErrors[`project-url-${index}`] && <p className="text-xs text-red-500 mt-1">Please enter a valid URL (e.g., https://example.com)</p>}
                                 </div>
                             </div>
                             <div className="space-y-2">
@@ -344,15 +369,39 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
             </div>
             <div className="space-y-2">
               <Label htmlFor="website">Website URL</Label>
-              <Input id="website" value={userProfile.website} onChange={e => handleChange('website', e.target.value)} placeholder="https://your.domain" />
+               <Input 
+                    id="website" 
+                    value={userProfile.website} 
+                    onChange={e => handleChange('website', e.target.value)} 
+                    onBlur={handleUrlBlur}
+                    placeholder="https://your.domain" 
+                    className={urlErrors['website'] ? 'border-red-500 focus:border-red-500 focus:ring-red-500/30 dark:focus:border-red-500' : ''}
+                />
+                {urlErrors['website'] && <p className="text-xs text-red-500 mt-1">Please enter a valid URL (e.g., https://example.com)</p>}
             </div>
             <div className="space-y-2">
               <Label htmlFor="portfolio">Portfolio URL</Label>
-              <Input id="portfolio" value={userProfile.portfolioUrl} onChange={e => handleChange('portfolioUrl', e.target.value)} placeholder="https://your.portfolio" />
+               <Input 
+                    id="portfolio" 
+                    value={userProfile.portfolioUrl} 
+                    onChange={e => handleChange('portfolioUrl', e.target.value)} 
+                    onBlur={handleUrlBlur}
+                    placeholder="https://your.portfolio"
+                    className={urlErrors['portfolio'] ? 'border-red-500 focus:border-red-500 focus:ring-red-500/30 dark:focus:border-red-500' : ''}
+                />
+                {urlErrors['portfolio'] && <p className="text-xs text-red-500 mt-1">Please enter a valid URL (e.g., https://example.com)</p>}
             </div>
             <div className="space-y-2">
               <Label htmlFor="blog">Blog URL</Label>
-              <Input id="blog" value={userProfile.blogUrl} onChange={e => handleChange('blogUrl', e.target.value)} placeholder="https://your.blog" />
+               <Input 
+                    id="blog" 
+                    value={userProfile.blogUrl} 
+                    onChange={e => handleChange('blogUrl', e.target.value)} 
+                    onBlur={handleUrlBlur}
+                    placeholder="https://your.blog" 
+                    className={urlErrors['blog'] ? 'border-red-500 focus:border-red-500 focus:ring-red-500/30 dark:focus:border-red-500' : ''}
+                />
+                {urlErrors['blog'] && <p className="text-xs text-red-500 mt-1">Please enter a valid URL (e.g., https://example.com)</p>}
             </div>
         </div>
          <div className="flex items-center space-x-2 pt-2">
@@ -458,10 +507,10 @@ const InputForm: React.FC<InputFormProps> = ({ userProfile, setUserProfile, onGe
                 <option value="Balanced">Balanced</option>
                 <option value="Precise">Precise</option>
             </Select>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-                {userProfile.generationStyle === 'Creative' && 'Enthusiastic tone, lots of emojis, and a fun layout.'}
-                {userProfile.generationStyle === 'Balanced' && 'A professional but friendly tone with a clean layout.'}
-                {userProfile.generationStyle === 'Precise' && 'Formal and direct, focusing on technical details. No emojis.'}
+            <p className="text-xs text-gray-500 dark:text-gray-400 min-h-[2.25rem] pt-1">
+                {userProfile.generationStyle === 'Creative' && 'Enthusiastic and friendly tone. Uses emojis liberally and may have unconventional section titles to show off your personality.'}
+                {userProfile.generationStyle === 'Balanced' && 'The default style. Creates a professional yet approachable README. Uses emojis moderately and maintains a clean, organized structure.'}
+                {userProfile.generationStyle === 'Precise' && 'Formal and technical. Avoids emojis and conversational language, focusing on a direct, concise presentation. Ideal for corporate profiles.'}
             </p>
         </div>
         <Button onClick={onGenerate} disabled={isLoading} variant="primary" className="w-full">
